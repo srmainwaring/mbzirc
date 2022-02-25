@@ -13,7 +13,9 @@ find_package(ignition-fuel_tools7 REQUIRED)
 find_package(ignition-math6 REQUIRED)
 set(IGN_MATH_VER ${ignition-math6_VERSION_MAJOR})
 find_package(ignition-msgs8 REQUIRED)
+set(IGN_MSGS_VER ${ignition-msgs8_VERSION_MAJOR})
 find_package(ignition-transport11 REQUIRED)
+set(IGN_TRANSPORT_VER ${ignition-transport11_VERSION_MAJOR})
 find_package(ignition-plugin1 REQUIRED COMPONENTS loader register)
 set(IGN_PLUGIN_VER ${ignition-plugin1_VERSION_MAJOR})
 find_package(ignition-rendering6 REQUIRED)
@@ -63,6 +65,20 @@ foreach(PLUGIN ${MBZIRC_IGN_PLUGINS})
     Waves
   )
 endforeach()
+
+add_executable(
+  image_saver
+  src/image_saver.cc
+)
+
+target_link_libraries(image_saver PUBLIC
+  ignition-common${IGN_COMMON_VER}::graphics
+  ignition-msgs${IGN_MSGS_VER}::ignition-msgs${IGN_MSGS_VER}
+  ignition-transport${IGN_TRANSPORT_VER}::ignition-transport${IGN_TRANSPORT_VER}
+  ignition-utils1::cli
+)
+
+install(TARGETS image_saver DESTINATION bin)
 
 install(
   TARGETS ${MBZIRC_IGN_PLUGINS}
