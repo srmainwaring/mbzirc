@@ -26,6 +26,11 @@
 
 #include <unistd.h>
 
+// killpg is declared in signal.h on macOS
+#if defined(__APPLE__)
+#include <signal.h>
+#endif
+
 #define WRITE 0
 #define READ 1
 

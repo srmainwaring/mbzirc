@@ -26,6 +26,7 @@
 #include <unordered_set>
 
 #include <ignition/math/AxisAlignedBox.hh>
+#include <ignition/math/Helpers.hh>
 
 #include <ignition/rendering/Camera.hh>
 #include <ignition/rendering/RenderEngine.hh>
@@ -148,19 +149,19 @@ class mbzirc::GameLogicPluginPrivate
   public: const std::unordered_map<PenaltyType, int> kTimePenalties = {
           {TARGET_VESSEL_ID_1, 180},
           {TARGET_VESSEL_ID_2, 240},
-          {TARGET_VESSEL_ID_3, IGN_INT32_MAX},
+          {TARGET_VESSEL_ID_3, ignition::math::MAX_I32},
           {SMALL_OBJECT_ID_1, 180},
           {SMALL_OBJECT_ID_2, 240},
-          {SMALL_OBJECT_ID_3, IGN_INT32_MAX},
+          {SMALL_OBJECT_ID_3, ignition::math::MAX_I32},
           {LARGE_OBJECT_ID_1, 180},
           {LARGE_OBJECT_ID_2, 240},
-          {LARGE_OBJECT_ID_3, IGN_INT32_MAX},
+          {LARGE_OBJECT_ID_3, ignition::math::MAX_I32},
           {SMALL_OBJECT_RETRIEVE_1, 120},
-          {SMALL_OBJECT_RETRIEVE_2, IGN_INT32_MAX},
+          {SMALL_OBJECT_RETRIEVE_2, ignition::math::MAX_I32},
           {LARGE_OBJECT_RETRIEVE_1, 120},
-          {LARGE_OBJECT_RETRIEVE_2, IGN_INT32_MAX},
+          {LARGE_OBJECT_RETRIEVE_2, ignition::math::MAX_I32},
           {BOUNDARY_1, 300},
-          {BOUNDARY_2, IGN_INT32_MAX}};
+          {BOUNDARY_2, ignition::math::MAX_I32}};
 
   /// \brief Write a simulation timestamp to a logfile.
   /// \param[in] _simTime Current sim time.
@@ -462,7 +463,7 @@ class mbzirc::GameLogicPluginPrivate
   public: int eventCounter = 0;
 
   /// \brief Total score.
-  public: double totalScore = IGN_DBL_INF;
+  public: double totalScore = ignition::math::INF_D;
 
   /// \brief boundary of competition area
   public: math::AxisAlignedBox geofenceBoundary;
@@ -2005,8 +2006,8 @@ std::chrono::steady_clock::time_point GameLogicPluginPrivate::UpdateScoreFiles(
   std::ofstream scoreFile(this->logPath + "/score.yml", std::ios::out);
   {
     std::lock_guard<std::mutex> lock(this->scoreMutex);
-    this->totalScore = (math::equal(this->timePenalty, IGN_INT32_MAX)) ?
-        IGN_INT32_MAX : simElapsed + this->timePenalty;
+    this->totalScore = (math::equal(this->timePenalty, ignition::math::MAX_I32)) ?
+        ignition::math::MAX_I32 : simElapsed + this->timePenalty;
 
     scoreFile << this->totalScore << std::endl;
   }

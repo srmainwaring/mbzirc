@@ -18,7 +18,6 @@
 #include <chrono>
 #include <string>
 #include <ignition/common/Profiler.hh>
-#include <ignition/common/Time.hh>
 #include <ignition/math/Pose3.hh>
 #include <ignition/math/Vector3.hh>
 #include <ignition/plugin/Register.hh>
